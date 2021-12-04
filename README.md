@@ -1,4 +1,4 @@
-# easy-command
+# easy-command api
 Annotation based command framework
 
 Create a command executor
