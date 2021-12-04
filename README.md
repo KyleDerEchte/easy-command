@@ -2,7 +2,7 @@
 Annotation based command framework
 
 Create a command executor
-```
+```java
 @EasyCommand(name = "example", permission = "easycommand.example")
 public class EasyCommandExampleCommand extends EasyCommandExecutor {
     public EasyCommandExampleCommand(String name) {
@@ -17,7 +17,7 @@ public class EasyCommandExampleCommand extends EasyCommandExecutor {
 }
 ```
 Register all commands
-```
+```java
     @Override
     public void onEnable() {
         try {
