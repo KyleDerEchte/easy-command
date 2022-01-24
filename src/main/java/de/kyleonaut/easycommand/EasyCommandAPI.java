@@ -17,16 +17,21 @@ import java.util.Set;
  */
 public class EasyCommandAPI {
 
-    public static void register() throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException, InstantiationException {
-        final Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
-        bukkitCommandMap.setAccessible(true);
-        final CommandMap commandMap = (CommandMap) bukkitCommandMap.get(Bukkit.getServer());
+    public static void register() {
+        final Field bukkitCommandMap;
+        try {
+            bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
+            bukkitCommandMap.setAccessible(true);
+            final CommandMap commandMap = (CommandMap) bukkitCommandMap.get(Bukkit.getServer());
 
-        final Reflections reflections = new Reflections();
-        final Set<Class<? extends EasyCommandExecutor>> executors = reflections.getSubTypesOf(EasyCommandExecutor.class);
-        for (Class<? extends EasyCommandExecutor> executor : executors) {
-            final String commandName = executor.getAnnotation(EasyCommand.class).name();
-            commandMap.register(commandName, executor.getConstructor().newInstance());
+            final Reflections reflections = new Reflections();
+            final Set<Class<? extends EasyCommandExecutor>> executors = reflections.getSubTypesOf(EasyCommandExecutor.class);
+            for (Class<? extends EasyCommandExecutor> executor : executors) {
+                final String commandName = executor.getAnnotation(EasyCommand.class).name();
+                commandMap.register(commandName, executor.getConstructor().newInstance());
+            }
+        } catch (NoSuchFieldException | IllegalAccessException | NoSuchMethodException | InstantiationException | InvocationTargetException e) {
+            e.printStackTrace();
         }
     }
 }
