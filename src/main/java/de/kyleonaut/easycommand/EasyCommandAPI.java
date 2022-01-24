@@ -26,10 +26,7 @@ public class EasyCommandAPI {
         final Set<Class<? extends EasyCommandExecutor>> executors = reflections.getSubTypesOf(EasyCommandExecutor.class);
         for (Class<? extends EasyCommandExecutor> executor : executors) {
             final String commandName = executor.getAnnotation(EasyCommand.class).name();
-            commandMap.register(
-                    commandName,
-                    executor.getConstructor(String.class).newInstance(commandName)
-            );
+            commandMap.register(commandName, executor.getConstructor().newInstance());
         }
     }
 }

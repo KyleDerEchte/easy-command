@@ -1,7 +1,7 @@
 package de.kyleonaut.easycommand.command;
 
+import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.defaults.BukkitCommand;
 
 import java.util.Arrays;
 
@@ -10,10 +10,11 @@ import java.util.Arrays;
  * @version 1.0.0
  * created at 04.12.2021
  */
-public abstract class EasyCommandExecutor extends BukkitCommand {
+public abstract class EasyCommandExecutor extends Command {
 
-    public EasyCommandExecutor(String name) {
-        super(name);
+    public EasyCommandExecutor() {
+        super("");
+        this.setName(getClass().getAnnotation(EasyCommand.class).name());
         this.description = getClass().getAnnotation(EasyCommand.class).description();
         this.setAliases(Arrays.asList(getClass().getAnnotation(EasyCommand.class).aliases()));
         this.setPermission(getClass().getAnnotation(EasyCommand.class).permission());
